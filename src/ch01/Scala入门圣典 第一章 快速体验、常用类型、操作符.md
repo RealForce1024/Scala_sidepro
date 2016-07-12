@@ -4,6 +4,15 @@
 
 [toc]
 
+### REPL
+Read Evaluate Print Loop
+scala的命令窗口并不是真正的解释器，而是快速的编译为java字节码，由jvm执行。
+能够很快的将执行结果返回到命令行窗口，REPL的叫法对于scala程序员更为亲切。
+同时，当程序更为复杂的时候，文本编辑器将会是另一种选择。
+当涉及到产品工程时，IDE将会有大用场。
+
+在repl中时可以使用 `.`触发大部分常用Api的提示。例如String类的**distinct**方法就没有提示【实际上没有是因为隐式转换，本不是该类的功能】
+
 ## 快速体验
 
 ```scala
@@ -28,60 +37,21 @@ toCharArray   toLowerCase   toString      toUpperCase
 scala> res4.toUpperCase
 res6: String = HELLO, 36.1
 ```
-### 将字符串转为数组
+
+### 字符串与数组的转换
+ val word = "hello world"
+#### 将字符串转为数组
 ```scala
-scala> res4.toString
-res8: String = hello, 36.1
-
-scala> res4.toArray
-res9: Array[Char] = Array(h, e, l, l, o, ,,  , 3, 6, ., 1)
-
-scala> res9
-res10: Array[Char] = Array(h, e, l, l, o, ,,  , 3, 6, ., 1)
-
-scala> res9.map(_+"**")
-res11: Array[String] = Array(h**, e**, l**, l**, o**, ,**, " **", 3**, 6**, .**, 1**)
-
-scala> res9.map(_+"**").toString
-res12: String = [Ljava.lang.String;@25c616e7
-
-scala> res13
-res14: Array[String] = Array(h**, e**, l**, l**, o**, ,**, " **", 3**, 6**, .**, 1**)
-
-scala> res13.
-apply          asInstanceOf   clone          isInstanceOf   length         toString       update         
-
-scala> res13.toString
-res16: String = [Ljava.lang.String;@4ff5a5fd
+    //string to array
+    val arr = word.toArray
+    println(arr)
 ```
 
-### 字符数组转为字符串
+#### 字符数组转为字符串
 ```scala
-scala> res13
-res14: Array[String] = Array(h**, e**, l**, l**, o**, ,**, " **", 3**, 6**, .**, 1**)
-
-scala> res13.
-apply          asInstanceOf   clone          isInstanceOf   length         toString       update         
-
-scala> res13.toString
-res16: String = [Ljava.lang.String;@4ff5a5fd
-
-scala> res13.map(_.contact()) //没有该方法
-<console>:13: error: value contact is not a member of String
-              res13.map(_.contact())
-                          ^
-scala> res13
-res20: Array[String] = Array(h**, e**, l**, l**, o**, ,**, " **", 3**, 6**, .**, 1**)
-
-scala> res13.mkString
-res21: String = h**e**l**l**o**,** **3**6**.**1**
+    //array to string
+    print(arr.mkString)
 ```
-
-参考 [ How to convert a Scala array (sequence) to string with mkString 《scala cookbook》](http://alvinalexander.com/scala/scala-convert-array-to-string-mkstring)
-
-### REPL 
-Read Evaluate Print Loop
-scala的命令窗口并不是真正的解释器，而是快速的编译为java字节码，由jvm执行。能够很快的将执行结果返回到命令行窗口，REPL的叫法对于scala程序员更为亲切。 同时，当程序更为复杂的时候，文本编辑器将会是另一种选择。当涉及到产品工程时，IDE将会有大用场。
 
 
 ## 常用类型、操作符
@@ -96,7 +66,7 @@ var b = 2 //值可以修改   **变量 variable
 
 推荐使用val的方式，大多数程序并不需要那么多的var变量。
 
-在REPL中的res变量是val还是var的呢？
+在REPL中的res变量默认是val还是var型的呢？
 下面代码证明为val
 ```scala
 scala> 3
@@ -107,7 +77,6 @@ scala> res33=5
        res33=5
             ^
 ```
-
 #### 类型自动推断
 ##### 不带类型声明
 看这段代码
@@ -122,12 +91,13 @@ b: String = hello scala
 
 scala的类型推断为我们写程序带来了很多遍历，但有时为了更加清晰明了，方便阅读（似乎矛盾），可以加上。
 
+tips:Intelli Idea 使用ctrl+alt+v 和变量定义很配....
 ##### 加上类型声明
 
 ```scala
 a: String = hello world
 
-scala> var b: Int = "1"  //如果声明了类型，需要对应上，否则error
+scala> var b: Int = "1"  //如果声明了类型，值当然需要对应上，否则error
 <console>:7: error: type mismatch;
  found   : String("1")
  required: Int
@@ -148,13 +118,15 @@ arr: Array[Int] = Array(1, 2)
 #### 同时声明多个值或变量
 
 ```scala
-scala> val a,b = 100
-a: Int = 100
-b: Int = 100
 
-scala> var x,y: String = null
-x: String = null
-y: String = null
+ val x,y = 3 //x=3,y=3
+ 
+ var x,y: String = null
+	x: String = null
+	y: String = null
+
+ val a,b = (3,4)  //a=(3,4),b=(3,4)
+
 ```
 
 ### 2. 常用数据类型
@@ -282,7 +254,7 @@ a: Double = 3.0
 
 #### BigInt的特殊方法 /%
 
-BigInt中的`/%` 方法的结果为`(商，余数)`的对偶
+`BigInt中的/%` 方法的结果为`(商，余数)`的`对偶`
 
 注意：BigInt类型的声明 最舒服的方式是显示指定类型，不要各种转换了..
 ```scala
@@ -310,7 +282,7 @@ scala> a.
 %                 &                 &~                *                 +                 -                 /                 /%                >                 >=                            
 .....                
 
-scala> a./%(3)
+scala> a./%(3) //a是BigInt类型的，编译才过
 res37: (scala.math.BigInt, scala.math.BigInt) = (1,2)
 ```
 [官网BigInt API参考](http://www.scala-lang.org/api/2.7.4/scala/BigInt.html)
@@ -335,24 +307,40 @@ res40: Int = 3
 ```
 .+方法名C的风格与DSL风格那种都可以，但`1.+(2)` 与`1+2`你会采取哪种写法呢？
 
-#### 无++ -- ，能用+=1,-=1
+#### 无++ - - ，能用+=1,-=1
 
 ```scala
-scala> var a = 2
+scala> var a = 2 //这里标识var，标明可以赋值
 a: Int = 2
 
-scala> a++
+scala> a++ //从错误提示上看 压根就没提供++操作符或方法
 <console>:9: error: value ++ is not a member of Int
               a++
                ^
 
-scala> a+=1
+scala> a+=1 // a=a+1
 
 scala> a
 res52: Int = 3
+
+
+//那看val类型的定义
+scala> val y = 1
+y: Int = 1
+
+scala> y++
+<console>:9: error: value ++ is not a member of Int
+              y++
+               ^
+
+scala> y+=1
+<console>:9: error: value += is not a member of Int
+              y+=1
+               ^
+
 ```
 
-Scala没有`++,--`,**因为Int类是不可变的**，实现++不那么简单，并且Scala设计者也认为**不应该为了少按一个键而额外的增加一个特例**。
+Scala没有`++,--`,**因为Int类是不 可变的**，实现++不那么简单，并且Scala设计者也认为**不应该为了少按一个键而额外的增加一个特例**。
 
 #### 操作符重载
 Scala写法
@@ -376,16 +364,19 @@ public class Test{
 	}
 }
 ```
+![Alt text](./1468309870948.png)
 
-**Java中不能对操作符进行重载**。理由是防止出现%^&..奇特操作符，不利于阅读。Scala的设计者认为Java对操作符的重载理念很糟糕，理由是按照Java设计者的逻辑，qwxes这类的方法名同样难以阅读。
+
+**Java中不能对操作符进行重载**。目的是为防止出现%^&..奇特操作符，不利于阅读。Scala的设计者认为Java对操作符的重载理念很糟糕，理由是按照Java设计者的逻辑，qwxes这类的方法名同样难以阅读。
 **Scala允许程序员自定义操作符，当然程序员获得自由的同时，也需要把握好分寸。**
 
 
 #### 调用函数
 方法的调用，之前的案例已经演示很多次了。
-这次说下函数的调用。 Scala是多范式的一门编程语言，函数更是其一等公民。
-函数在Scala语言扮演者举足轻重的角色。
-比如：
+这次说下函数的调用。 Scala是**多范式的**一门编程语言，**函数更是其一等公民**。
+函数在Scala语言扮演着举足轻重的角色。
+
+
 ##### 数学函数
 在Scala中使用数学函数比在Java中方便地多---不需要从某个类中调用它的静态方法。
 **使用数学函数时，注意先导包**
@@ -411,7 +402,8 @@ scala> sqrt(9)
 res4: Double = 3.0
 ```
 ##### Scala中无静态方法---伴生对象的存在
-Scala中不像Java中调用Math包中的数学静态工具类去调用一堆静态方法，**Scala中没有静态方法**，但其有单例对象，通常Scala的类都有一个伴生对象，该对象中的方法都是静态的。
+Scala中不像Java中调用Math包中的数学静态工具类去调用一堆静态方法，
+**Scala中没有静态方法**，但其有单例对象，通常Scala的类都有一个伴生对象，该对象中的方法都是静态的。
 例如：BigInt的伴生对象BigInt有个生成指定位数的随机素数的方法probablePrime.
 
 
@@ -425,6 +417,15 @@ scala> BigInt.probablePrime
 scala> BigInt.probablePrime(100,scala.util.Random)
 res5: scala.math.BigInt = 1039784749608415333365855987893
 ```
+
+```scala
+import scala.BigInt._
+import scala.util.Random
+
+println(probablePrime(100, new Random()))//new Class()
+println(probablePrime(100, Random)) //Object 半生对象
+```
+![Alt text](./1468310898573.png)
 
 ### 4. 使用伴生对象的apply方法
 Scala中使用函数调用的方式非常常见。例如：
@@ -442,14 +443,16 @@ java.lang.StringIndexOutOfBoundsException: String index out of range: 5
 实际上背后的实现原理为apply()方法
 
 ```scala
-scala> "hello".apply(1)  //简写为 "hello"(1)
+scala> "hello".apply(1)  //简写为 "hello"(1)  apply(n:Int)
 res5: Char = e
 ```
+StringOps类中方法定义
+![Alt text](./1468311085016.png)
 
 **使用伴生对象apply方法生成对象是Scala中常用的手法。**
 以后会经常用到的**数组生成方式**
 
-```
+```scala
 scala> Array(1,2,3,4)
 res9: Array[Int] = Array(1, 2, 3, 4)
 
@@ -459,6 +462,17 @@ java.lang.ArrayIndexOutOfBoundsException: 10
     
 scala> Array(1 to 10)
 res12: Array[scala.collection.immutable.Range.Inclusive] = Array(Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+
+val inclusives: Array[Inclusive] = Array(1 to 10,1 to 20)//需要注意的是目前的Array对象中只生成了一个元素而已 
+println(inclusives.length) //2
+println(inclusives(1)) //Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+
+for (elem <- inclusives) {
+   println(elem)  //Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+   //Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+  }
+}
+
 ```
 
 ### 5. 函数作为参数
@@ -466,9 +480,6 @@ Scala中函数作为参数传入方法相当普遍。
 在StringOps方法中count方法接收单个Char并可以返回Boolean类型结果的函数
 `def count(p: (Char) => Boolean): Int`
 ```scala
-scala> "heLLo".count(_.isUpper)
-res28: Int = 2
-
 scala> "heLLLo".count(_.isUpper)
 res29: Int = 3
 ```
@@ -477,6 +488,15 @@ res29: Int = 3
 ```scala
 scala> "heXXXo".count(x=>x.isUpper)
 res31: Int = 3
+```
+注意能直接就直接，
+
+```scala
+scala> "heXXXo".map(_.toString.toUpperCase) //map(t) t元素是char类型
+res25: scala.collection.immutable.IndexedSeq[String] = Vector(H, E, X, X, X, O)
+
+scala> "heXXXo".toUpperCase
+res1: String = HEXXXO
 ```
 
 
