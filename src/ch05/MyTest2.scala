@@ -99,5 +99,10 @@ object MyTest2 {
     println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)).toList.sortBy(_._2))
     println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)).toList.sortBy(_._2).reverse)
 
+    //mapValues更加精炼
+    println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).mapValues(x=>x.size))
+    println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).mapValues(_.size))
+
+
   }
 }
