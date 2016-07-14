@@ -1,4 +1,4 @@
-package ch05
+package ch06
 
 /**
   * Created by fqc on 2016/7/13.
