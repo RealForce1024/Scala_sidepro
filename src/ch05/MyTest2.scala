@@ -94,5 +94,10 @@ object MyTest2 {
     println(words.map(_.split(" ")).flatten.toList.map((_,1)))
     println(words.map(_.split(" ")).flatten.map((_,1)))
     println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)))
+
+    //对结果排序
+    println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)).toList.sortBy(_._2))
+    println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)).toList.sortBy(_._2).reverse)
+
   }
 }
