@@ -87,8 +87,12 @@ object MyTest2 {
     //    println(words.map(_.split(" ")).flatten.toList.map(x => (x, 1)).groupBy(_._1).toList.map(_ => _._2.size))
     //    println(words.map(_.split(" ")).flatten.toList.map(x => (x, 1)).groupBy(_._1).toList.map((_._2.size)))
 
-    println(words.map(_.split(" ")).flatten.toList.map(x => (x, 1)).groupBy(_._1).toList.map(x => (x._1, x._2.size)))
+    println(words.map(_.split(" ")).flatten.toList.map(x => (x, 1)).groupBy(_._1).toList.map(x => (x._1, x._2.size)))//较为啰嗦，toList ，map flatten可以使用flatMap代替
     //List((fqc,2), (kobe,1), (tom,1), (jim,1), (hello,4))
 
+
+    println(words.map(_.split(" ")).flatten.toList.map((_,1)))
+    println(words.map(_.split(" ")).flatten.map((_,1)))
+    println(words.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(x=>(x._1,x._2.size)))
   }
 }
