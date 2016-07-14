@@ -5,7 +5,7 @@ package ch06
   * 辅助构造器
   */
 class AuxiziliaryConstructor {
-  private var name: String = name
+  private var name: String = ""
   private var age: Int = 0
 
   def this(age: Int) {
