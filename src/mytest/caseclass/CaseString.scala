@@ -4,7 +4,7 @@ import scala.util.Random
 
 /**
   * Created by fqc on 2016/7/15.
-  * 模式匹配字符串
+  * 模式匹配字符串的值
   */
 object CaseString extends App {
 
@@ -19,7 +19,7 @@ object CaseString extends App {
     case "jordan" => println("乔丹")
     case _ => println("公牛那个最年轻的状元？")
   }
-  ////该段完全顶上段啊.... 只是为了演示
+  ////该段完全顶上段啊.... 只是为了演示是为了匹配字符串的值！
   player match {
     case x:String => println(x)
   }
