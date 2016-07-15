@@ -4,27 +4,26 @@ package ch06
   * Created by fqc on 2016/7/13.
   * 辅助构造器
   */
-class AuxiziliaryConstructor {
-  private var name: String = ""
-  private var age: Int = 0
+class AuxiziliaryConstructor(val id: Int) {
 
-  def this(age: Int) {
-    this()
-    this.age = age
-  }
+  var name: String = _
 
-  def this(name:String,age:Int){
-    this(age)
+  /* def this(age: Int) {
+     this(id)//一定要先调用主构造器
+     this.age = age
+   }*/
+
+  def this(id: Int = 0, name: String) {
+    this(id)
     this.name = name
   }
-
 }
 
-object Constructor{
+object Constructor {
   def main(args: Array[String]) {
-    val constructor = new AuxiziliaryConstructor()
+    val constructor = new AuxiziliaryConstructor(1)
     val constructor1 = new AuxiziliaryConstructor(10)
-    val constructor2 = new AuxiziliaryConstructor("kobe",39)
+    val constructor2 = new AuxiziliaryConstructor(name = "kobe")
 
   }
 }
