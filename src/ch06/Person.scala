@@ -3,7 +3,8 @@ package ch06
 /**
   * Created by fqc on 2016/7/14.
   */
-private[ch06] class Person(var id:Int= 0,var age:Int = 0) {//包访问权限，所有子包可以访问，其他包则无法访问
+private[ch06] class Person (var id:Int= 0,var age:Int = 0) {//包访问权限，所有子包可以访问，其他包则无法访问
+private[ch06] class Person private (var id:Int= 0,var age:Int = 0) {//第二个private 构造器私有 只能在自己的伴生对象初始化
   val name: String = null //字段需要进行初始化
   //javap -private Person
   /* public class ch06.Person {
