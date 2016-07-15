@@ -12,6 +12,7 @@ class Person(var id:Int= 0,var age:Int = 0) {
      public ch06.Person();
    }*/
 
+  private[this] var gender :String = _ //只有当前类中才能够使用  _只有new的时候初始化相当于null
   private var country: String = "china"
   /*public class ch06.Person {
     private final java.lang.String name;
