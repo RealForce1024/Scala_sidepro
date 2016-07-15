@@ -8,6 +8,7 @@ import scala.util.Random
   */
 object CaseString extends App {
 
+  /////////////////////////////////////////////////////////////////////////////////////////////
   private val arr: Array[String] = Array("kobe", "jordan", "james", "rose")
 
   private val player: String = arr(Random.nextInt(arr.length))
@@ -18,7 +19,11 @@ object CaseString extends App {
     case "jordan" => println("乔丹")
     case _ => println("公牛那个最年轻的状元？")
   }
-
+  ////该段完全顶上段啊.... 只是为了演示
+  player match {
+    case x:String => println(x)
+  }
+/////////////////////////////////////////////////////////////////////////////////////////////
 
   val arr2 = Array("YoshizawaAkiho", "YuiHatano", "AoiSola")
   val name = arr2(Random.nextInt(arr2.length))
