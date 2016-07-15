@@ -16,7 +16,6 @@ object CaseType extends App {
   println(elem)
 
   //elem.match + tab键组合 一气呵成模板..
-  elem.match
   elem match {
     case x: Int => println(s"Int $x")
     case y: String => println(s"Double $y")
