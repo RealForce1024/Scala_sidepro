@@ -4,6 +4,7 @@ import scala.util.Random
 
 /**
   * Created by fqc on 2016/7/15.
+  * 模式匹配字符串
   */
 object CaseString extends App {
 
