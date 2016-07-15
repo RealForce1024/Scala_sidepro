@@ -8,10 +8,15 @@ import scala.util.Random
   */
 object CaseType extends App {
 
+  //val x = 3
+  //val v = if(x >= 5) 1 else if(x < 2) 2.0 else "hello"   如果需求根据判断返回类型 代码比较麻烦且不够清晰，不如模式匹配的方式
+
   private val arr = Array(1, "spark2.0", CaseType, 2.0)
   private val elem = arr(Random.nextInt(arr.length))
   println(elem)
 
+  //elem.match + tab键组合 一气呵成模板..
+  elem.match
   elem match {
     case x: Int => println(s"Int $x")
     case y: String => println(s"Double $y")
