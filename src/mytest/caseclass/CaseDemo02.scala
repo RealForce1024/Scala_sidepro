@@ -15,9 +15,9 @@ object CaseDemo02 extends App{
   println(elem)
 
   elem match {
-    case x: Int => println("Int " + x)
-    case y: Double if(y >= 0) => println("Double "+ y)
-    case z: String => println("String " + z)
+    case x: Int => println(s"Int $x")
+    case y: Double if(y >= 0) => println(s"Double $y")
+    case z: String => println("String $z" )
     case _ => throw new Exception("not match exception")
   }
 

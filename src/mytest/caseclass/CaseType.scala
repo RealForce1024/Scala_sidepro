@@ -21,7 +21,7 @@ object CaseType extends App {
     /*2.0
     不认识的类型
   */
-    case a: Double => println(s"Double: ", a)
+    case a: Double => println(s"Double: " + a)
     case _ => println("不认识的类型")
   }
 
