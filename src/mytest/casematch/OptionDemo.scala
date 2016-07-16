@@ -7,7 +7,7 @@ object OptionDemo {
   def main(args: Array[String]) {
     val map = Map("a" -> 1, "b" -> 2)
 
-    val v = map.get("b") match {
+    val v = map.get("b") match {//get方法返回值是option对象
       case Some(i) => i //匹配则封装到Some对象当中
       case None => 0 //否则None对象
     }
