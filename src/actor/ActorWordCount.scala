@@ -1,12 +1,58 @@
 package actor
 
-import actor.Client.{StopTask, SubmitTask}
+
+import actor.Client.SubmitTask
 
 import scala.actors.{Actor, Future}
+import scala.io.Source
+import scala.reflect.io.File
 
 /**
   * Created by fqc on 2016/7/16.
   */
+
+
+class ActorWordCount extends Actor {
+  case class ResultMessage(map:Map[String,Int])
+  override def act(): Unit = {
+    loop {
+      react {
+        case SubmitTask(file) => {
+          println(s"接收文件 :$file ")
+          // Source.fromFile(new File(file)).getLines //new File(jFile:File)  fromFile(name:String)
+          val lines: Iterator[String] = Source.fromFile(file).getLines() //获取迭代器
+          /*for (line <- lines) {
+            line.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(_.size)
+          }*/
+          val content: Map[String, Int] = lines.flatMap(_.split(" ")).map((_, 1)).toList.groupBy(_._1).mapValues(_.size)
+          sender ! ResultMessage(content)
+        }
+      }
+    }
+
+
+  }
+}
+
+object Client {
+
+  case class SubmitTask(file: String)
+
+  def main(args: Array[String]) {
+    // val files: Array[File] = Array()//文件传名称即可
+    val files: Array[String] = Array("c:/a.txt", "c:/a.txt") //文件传名称即可
+
+    val counter: ActorWordCount = new ActorWordCount
+    counter.start() // 易丢
+    for (file <- files) {
+      val future: Future[Any] = counter !! SubmitTask(file)
+      println(future.apply())
+    }
+  }
+}
+
+// Region v1
+/* v1
 class ActorWordCount extends Actor {
 
 
@@ -43,4 +89,5 @@ object Client {
     println(future.isSet)
     println(future.isSet)
   }
-}
+}*/
+// endRegion
