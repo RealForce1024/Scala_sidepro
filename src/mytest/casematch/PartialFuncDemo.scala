@@ -2,6 +2,7 @@ package mytest.casematch
 
 /**
   * 偏函数
+  * 根据输入参数自动选择处理方式
   */
 object PartialFuncDemo {
 
