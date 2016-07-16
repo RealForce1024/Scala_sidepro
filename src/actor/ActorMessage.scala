@@ -5,10 +5,7 @@ import scala.actors.Actor
 /**
   * Created by fqc on 2016/7/16.
   */
-class ActorMessage {
 
-
-}
 
 class ActorTask1 extends Actor {
   override def act(): Unit = {
@@ -66,7 +63,7 @@ object App {
 //    t1 ! "stop"
 //    println("发送消息完毕")
 //
-    val t2: ActorTask2 = new ActorTask2
+    val t2: ActorTask2 = new ActorTask2 //react接收方式会复用线程，更加的高效
     t2.start()
     //t2 ! "start" //! actor发送消息是异步的，但是接收到消息执行的过程是同步的
     t2 !? "start" //!? 所以想要start确认start执行完毕之后在发送消息 !?  该方法会阻塞
