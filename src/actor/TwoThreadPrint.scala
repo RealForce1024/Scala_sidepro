@@ -24,7 +24,7 @@ object T2 extends Actor{
   }
 }
 
-object App{
+object AppStart{
   def main(args: Array[String]) {
     T1.start()
     T2.start()

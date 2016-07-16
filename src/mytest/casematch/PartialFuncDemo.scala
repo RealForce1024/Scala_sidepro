@@ -3,6 +3,7 @@ package mytest.casematch
 /**
   * 偏函数
   * 根据输入参数自动选择处理方式
+  * 在Actor编程中使用广泛，可以查看actor包的代码
   */
 object PartialFuncDemo {
 
