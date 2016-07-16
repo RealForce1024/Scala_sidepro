@@ -1,4 +1,4 @@
-package mytest.caseclass
+package mytest.casematch
 
 import scala.util.Random
 

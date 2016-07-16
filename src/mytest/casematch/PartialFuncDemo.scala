@@ -1,4 +1,4 @@
-package mytest.caseclass
+package mytest.casematch
 
 /**
   * Created by ZX on 2016/4/5.

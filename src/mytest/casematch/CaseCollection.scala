@@ -1,4 +1,4 @@
-package mytest.caseclass
+package mytest.casematch
 
 /**
   * Created by fqc on 2016/7/15.
