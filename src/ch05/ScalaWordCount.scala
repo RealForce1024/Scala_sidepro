@@ -3,12 +3,12 @@ package ch05
 /**
   * Created by fqc on 2016/7/14.
   */
-class MyTest2 {
+class ScalaWordCount {
 
 
 }
 
-object MyTest2 {
+object ScalaWordCount {
   def main(args: Array[String]) {
     //创建一个List
     val lst0 = List(1, 7, 9, 8, 0, 3, 5, 4, 6, 2)
@@ -125,6 +125,10 @@ object MyTest2 {
     //再次重构wordcount
     println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(_.foldLeft(0)(_ + _._2)))
     println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(_.par.foldLeft(0)(_ + _._2)))//单机版并行wordcount操作
+    //mapValues(_.par.foldLeft(0)(_ + _._2)
+    // [_]01 代表value 每一个list
+    // [_]02 代表foldleft初始值或者累加过的值
+    // _._2 代表foldLef计算的每个对偶元组
   }
 
 }
