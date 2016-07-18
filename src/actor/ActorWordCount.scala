@@ -1,9 +1,11 @@
 package actor
 
 
-import actor.Client.SubmitTask
+import actor.Client.{ResultMessage, SubmitTask}
 
 import scala.actors.{Actor, Future}
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.reflect.io.File
 
@@ -13,7 +15,6 @@ import scala.reflect.io.File
 
 
 class ActorWordCount extends Actor {
-  case class ResultMessage(map:Map[String,Int])
   override def act(): Unit = {
     loop {
       react {
@@ -34,9 +35,15 @@ class ActorWordCount extends Actor {
 
 object Client {
 
+  case class ResultMessage(result:Map[String,Int])
   case class SubmitTask(file: String)
 
   def main(args: Array[String]) {
+
+    val resultSet = new mutable.HashSet[Future[Any]]()//存储actor计算返回结果
+    val resultList = new ListBuffer[ResultMessage]()
+
+
     // val files: Array[File] = Array()//文件传名称即可
     val files: Array[String] = Array("c:/a.txt", "c:/a.txt") //文件传名称即可
 
@@ -45,7 +52,28 @@ object Client {
     for (file <- files) {
       val future: Future[Any] = counter !! SubmitTask(file)
       println(future.apply())
+      //返回结果存储
+      resultSet += future
     }
+
+    println(resultSet)
+
+    while (!resultSet.isEmpty) {
+      val toCompute = resultSet.filter(_.isSet)
+
+      for (elem <- toCompute) {
+        val result: ResultMessage = elem().asInstanceOf[ResultMessage]
+        resultList += result
+        resultSet -= elem
+      }
+    }
+
+    //结果汇总
+
+    resultList.flatMap(_.result)
+
+
+
   }
 }
 
