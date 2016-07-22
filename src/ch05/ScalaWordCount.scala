@@ -25,17 +25,22 @@ object ScalaWordCount {
     println(lst4)
     //反转顺序
     println(lst4.reverse)
+
+
     //将lst0中的元素4个一组,类型为Iterator[List[Int]]
     val grouped: Iterator[List[Int]] = lst0.grouped(4)
     println(grouped) //non-empty iterator 可以转换为list操作
     for (elem <- grouped) {
-      println(elem)
+      println("elem = " + elem)
     }
+    //迭代器为list操作 操作方式更为丰富
+    grouped.toList.map(println(_))
     /*
     List(1, 7, 9, 8)
     List(0, 3, 5, 4)
     List(6, 2)
     */
+
 
     //将Iterator转换成List
     val lst5: List[List[Int]] = lst0.grouped(4).toList //分组的iterator转为list操作很方便 ,iterator与list可以互相转换
