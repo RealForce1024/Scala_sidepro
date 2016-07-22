@@ -41,17 +41,18 @@ object ScalaWordCount {
     List(6, 2)
     */
 
-
-    //将Iterator转换成List
+    //将分组后获得的Iterator转换成List进而压平
     val lst5: List[List[Int]] = lst0.grouped(4).toList //分组的iterator转为list操作很方便 ,iterator与list可以互相转换
     println(lst5) //List(List(1, 7, 9, 8), List(0, 3, 5, 4), List(6, 2))
     println(lst5.flatten) //List(1, 7, 9, 8, 0, 3, 5, 4, 6, 2)
 
     //将多个list压扁成一个List
     val lines = List("hello tom hello jerry", "hello jerry", "hello kitty")
-    //先按空格切分，在压平
-    println(lines)
-    println(lines.map(_.split(" ")).flatten)
+    //先按空格切分，再压平
+    println("lines = " + lines)
+    println(lines.map(_.split(" ")))//List[Array[String]]
+    println("map&flatten = "+lines.map(_.split(" ")).flatten)
+    println("lines.flatMap = " + lines.flatMap(_.split(" ")))
 
     //并行计算求和
 
@@ -103,13 +104,13 @@ object ScalaWordCount {
 
     //对结果排序
     println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).map(x => (x._1, x._2.size)).toList.sortBy(_._2))
-    println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).map(x => (x._1, x._2.size)).toList.sortBy(_._2).reverse)
+    println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).map(x => (x._1, x._2.size)).toList.sortBy(_._2).reverse)//排序后再reverse
 
     //mapValues更加精炼
     println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(x => x.size))
     println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(_.size)) //直接对对偶元素的value进行操作，key保持不动
 
-    //但是上面有一个特大的局限就是 mapValues或map时都使用的size，如果分组局部间进行聚合优化了，size将是错误的。 即局部combiner
+    //但是上面有一个特大的局限就是 mapValues或map时都使用的size，如果分组局部间进行聚合优化了即局部combiner，size将是错误的。
     //先看下基础的
     val arrsum = Array(1, 2, 3, 4, 5, 6)
     println(arrsum.sum)
@@ -133,7 +134,8 @@ object ScalaWordCount {
     //mapValues(_.par.foldLeft(0)(_ + _._2)
     // [_]01 代表value 每一个list
     // [_]02 代表foldleft初始值或者累加过的值
-    // _._2 代表foldLef计算的每个对偶元组
+    // _._2 代表foldLeft计算的每个对偶元组
+    println(words.flatMap(_.split(" ")).map((_, 1)).groupBy(_._1).mapValues(_.par.foldLeft(0)(_ + _._2)).toList.sortBy(_._2).reverse)
   }
 
 }
