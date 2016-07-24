@@ -7,6 +7,8 @@ class TestGeneric {
 
 }
 
-class Generic[T](name:T){
-
+class Generic[T](name: T) {
+  def test[G](obj: G) = {
+    println(obj)
+  }
 }
