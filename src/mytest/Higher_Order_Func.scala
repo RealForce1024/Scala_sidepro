@@ -52,4 +52,15 @@ object Higher_Order_Func extends App {
   val func_toUpperCase = (s:String)=>s.toUpperCase()
   val result3: Array[String] = changeArrayElem(arr2,func_toUpperCase)
   println("result3 = " + result3.toBuffer)
+
+  //以后匿名函数方式使用的很多
+  //现在做更多的变形
+  //将字符加后缀
+  val result4 = changeArrayElem(arr2,(s:String)=>s+"_$$")
+  println("result4 = " + result4.toBuffer)
+
+  //将字符double
+  val result5 = changeArrayElem(arr2,(s:String)=>s*2+"--")
+  println("result5 = " + result5.toBuffer)
+
 }
