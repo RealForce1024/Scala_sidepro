@@ -22,7 +22,7 @@ package test_implicit {
 
 }
 
-object Driver extends App {
+object DriverMain extends App {
   //3. 导入隐式参数
   import test_implicit.Context._
   val person = test_implicit.Person
