@@ -27,4 +27,37 @@ object Driver extends App {
   import test_implicit.Context._
   val person = test_implicit.Person
   person.sayHello("kobe")
+
+  def sayHello2(implicit mes:String){
+    println(mes)
+  }
+  sayHello2 //这里证明了隐式参数按照类型来发生隐式转换的。
+  sayHello2("jordan")//如果有自己的值会覆盖隐式参数的值
 }
+
+/*
+* 隐式参数 匿名函数作为隐式参数转换
+* */
+
+//scala> def min(x:T,y:T)={if(x<y) x else y}
+//<console>:7: error: not found: type T
+//def min(x:T,y:T)={if(x<y) x else y}
+//^
+//<console>:7: error: not found: type T
+//def min(x:T,y:T)={if(x<y) x else y}
+//^
+//
+//scala> def min[T](x:T,y:T)={if(x<y) x else y}
+//<console>:7: error: value < is not a member of type parameter T
+//def min[T](x:T,y:T)={if(x<y) x else y}
+//^
+//
+//
+//scala> def min[T](x:T,y:T)(implicit s:T => Ordered[T])={if(x<y) x else y}
+//min: [T](x: T, y: T)(implicit s: T => Ordered[T])T
+//
+//scala> min(1,2)
+//res0: Int = 1
+//
+//scala> min("c","d")
+//res1: String = c
