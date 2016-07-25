@@ -63,4 +63,15 @@ object Higher_Order_Func extends App {
   val result5 = changeArrayElem(arr2,(s:String)=>s*2+"--")
   println("result5 = " + result5.toBuffer)
 
+
+  //高阶函数的简化   上面的类型是可以省略的，且有些变量使用_替换更加简便
+  val result6: Array[String] = changeArrayElem(arr2,(s:String)=>s*2)
+  val result7: Array[String] = changeArrayElem(arr2,(s)=>s*2)
+  val result8: Array[String] = changeArrayElem(arr2,s=>s*2)
+  val result9: Array[String] = changeArrayElem(arr2,_*2)
+
+  println("result6 = " + result6.toBuffer)
+  println("result7 = " + result7.toBuffer)
+  println("result8 = " + result8.toBuffer)
+  println("result9 = " + result9.toBuffer)
 }
