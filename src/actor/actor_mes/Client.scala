@@ -7,16 +7,19 @@ import scala.actors.Actor
   */
 case class Person(name: String, age: Int)
 
-object ActorWithCaseClass {
+object Client  {
+
+
+
   def main(args: Array[String]) {
 
     Server.start()
     Server ! new Person("kobe", 39)
     val replyMsg: Any = Server !? new Person("james", 32)
     println(replyMsg)
-    /*self.receive{
 
-    }*/
+
   }
+
 }
 
